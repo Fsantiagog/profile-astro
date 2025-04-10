@@ -16,6 +16,7 @@ pipeline{
             steps{
                 script {
                     sh '''
+                    rm -rf .git .github Jenkinsfile
                     aws s3 sync . s3://$BUCKET_NAME --delete --exact-timestamps
                     '''
                 }
