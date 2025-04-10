@@ -27,7 +27,7 @@ pipeline{
                 script{
                     sh '''
                     echo "Invalidando caché de CloudFront..."
-                        aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/
+                        aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"
                     '''
                 }
             }
