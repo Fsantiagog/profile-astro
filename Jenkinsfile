@@ -3,7 +3,7 @@ pipeline{
     environment {
         AWS_REGION = "us-east-1"
         BUCKET_NAME ="profile-website-fsantiago"
-
+        DISTRIBUTION_ID="E2087UU0AMJNKK"
     }
     stages{
         stage('Checking code'){
@@ -18,6 +18,16 @@ pipeline{
                     sh '''
                     rm -rf .git .github Jenkinsfile
                     aws s3 sync . s3://$BUCKET_NAME --delete --exact-timestamps
+                    '''
+                }
+            }
+        }
+        stage('Clean up cache'){
+            steps{
+                script{
+                    sh '''
+                    echo "Invalidando caché de CloudFront..."
+                        aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths
                     '''
                 }
             }
